@@ -43,7 +43,14 @@ class App extends Component{
         
     }
 
-    componentDidMount(){
+    async componentDidMount(){
+        this.getListData();
+    }
+
+    async deleteItem(id){
+        
+        const resp = await axios.delete(`${this.base_url}/todos/${id}${this.api_key}`);
+
         this.getListData();
     }
 
@@ -58,12 +65,12 @@ class App extends Component{
     }
 
     render(){
-        console.log('APP STATE:', this.state);
+
         return (
             <div className="container">
                 <h1 className="center">To-Do List</h1>
                 <AddItem add={this.addItem.bind(this)}/>
-                <List data={this.state.list}/>
+                <List data={this.state.list} delete={this.deleteItem.bind(this)}/>
             </div>
         );
     }
